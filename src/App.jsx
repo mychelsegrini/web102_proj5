@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import List from './components/List'
 import Card from './components/Card'
+import Charts from './components/Charts'
 
 function App() {
   const [data, setData] = useState([])
@@ -32,7 +33,7 @@ function App() {
 
   const handleSubmit = (criteria) => {
     criteria.preventDefault();
-    let newData = data.filter((elem, index, array) => {
+    let newData = data.filter((elem) => {
       return elem.name.slice(0, criteria.target.elements.name.value.length) == criteria.target.elements.name.value;
     })
     setDisplayedData(newData)
@@ -98,6 +99,8 @@ function App() {
         <Card text={"Average Population"} prop={`${Math.round(avgPop).toLocaleString()}`}/>
         <Card text={"Average Electricity Access"} prop={`${avgElec.toFixed(2)}%`}/>
       </div>
+      {displayedData.length > 0 && <Charts data={displayedData} />}
+
       <List 
         data={displayedData} 
         handleSubmit={handleSubmit} 

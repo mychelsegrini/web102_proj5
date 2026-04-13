@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 
 const List = ({data, handleSubmit, reset, handleSlider, threshold}) => {
     
@@ -13,18 +13,18 @@ const List = ({data, handleSubmit, reset, handleSlider, threshold}) => {
                 <button type="submit">Submit</button>
             </form>
 
-            <label>Minimum GDP: ${threshold.toLocaleString()}</label>
+            <label>Minimum GDP per Capita: ${threshold.toLocaleString()}</label>
             <input 
                 type="range" 
                 min="0" 
-                max="290000" // ~22 Trillion (USA approx)
-                step="1000"    // Jump by 1 Billion
+                max="290000"
+                step="1000"
                 value={threshold} 
                 onChange={handleSlider} 
                 style={{ width: '100%' }}
             />
             <button onClick={reset}>Reset List</button>
-            <table>
+            <table className="country-list">
                 <thead>
                     <tr>
                         <th>Country</th>
@@ -36,7 +36,7 @@ const List = ({data, handleSubmit, reset, handleSlider, threshold}) => {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index}>
-                            <td>{item.name}</td>
+                            <td><Link to={`/country/${item.name}`} state={item}>{item.name}</Link></td>
                             <td>{item.gdp ? item.gdp.toLocaleString() : 'N/A'}</td>
                             <td>{item.elec ? `${item.elec.toFixed(2)}%` : 'N/A'}</td>
                             <td>{item.pop ? item.pop.toLocaleString() : 'N/A'}</td>
